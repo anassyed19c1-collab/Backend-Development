@@ -1,29 +1,24 @@
 import express from 'express';
+import Path from 'path';
+import { fileURLToPath } from 'url';
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
+
+
 
 const hostRouter = express.Router();
 
 
-hostRouter.get('/host/add-home', (req, res, next) => {
-    res.send(
-        `
-        <h1>Register Your Home</h1>
-        <br>
-        <form action="/host/add-home" method="post">
-            <input type="text" name="houseName" placeholder="Enter House Name">
-            <input type="submit">
-        </form>
-        `
-    )
+
+hostRouter.get('/add-home', (req, res, next) => {
+    res.sendFile(Path.join(__dirname, '../', 'views', 'addHome.html'))
 })
 
 
-hostRouter.post('/host/add-home', (req, res, next) => {
-    res.send(
-        `
-        <h1>House Successfully Added</h1>
-        <a href="/">Go To home</a>
-        `
-    )
+hostRouter.post('/add-home', (req, res, next) => {
+    res.sendFile(Path.join(__dirname, '../', 'views', 'homeAdded.html'))
 })
 
 

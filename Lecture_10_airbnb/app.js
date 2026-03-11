@@ -1,9 +1,15 @@
 import express from 'express';
+import Path from 'path';
+import { fileURLToPath } from 'url';
 
 import userRouter from './routes/userRouter.js';
 import hostRouter from './routes/hostRouter.js';
 
 const app = express();
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename)
 
 
 app.use((req, res, next) => {
@@ -15,54 +21,13 @@ app.use((req, res, next) => {
 app.use(express.urlencoded());
 
 app.use(userRouter);
-
-app.use(hostRouter)
-
-
-// Shift in userRouter.js
-// app.get('/', (req, res) => {
-//     res.send(
-//         `
-//         Welcome to Airbnb!
-//         <br>
-//         <a href="/host/add-home">Add home</a>
-//         `
-//     )
-// })
-
-// Shift in hostRouter.js
-// app.get('/host/add-home', (req, res, next) => {
-//     res.send(
-//         `
-//         <h1>Register Your Home</h1>
-//         <br>
-//         <form action="/host/add-home" method="post">
-//             <input type="text" name="houseName" placeholder="Enter House Name">
-//             <input type="submit">
-//         </form>
-//         `
-//     )
-// })
+app.use('/host', hostRouter);
 
 
-// app.post('/host/add-home', (req, res, next) => {
-//     res.send(
-//         `
-//         <h1>House Successfully Added</h1>
-//         <a href="/">Go To home</a>
-//         `
-//     )
-// })
+app.use((req, res, next) => {
+    res.status(404).sendFile(Path.join(__dirname, './', 'views', '404_Error.html'))
+})
 
-
-
-
-
-// app.get('/', (req, res) => {
-//     console.log('airbnb server started', req.url, req.method);
-
-//     res.send('Airbnb Server Started!')
-// })
 
 
 const PORT = 3000;

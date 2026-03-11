@@ -1,17 +1,17 @@
 import express from 'express';
+import Path from 'path'
+import { fileURLToPath } from 'url';
 
 
-const userRouter = express.Router()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
+
+
+const userRouter = express.Router();
 
 
 userRouter.get('/', (req, res) => {
-    res.send(
-        `
-        Welcome to Airbnb!
-        <br>
-        <a href="/host/add-home">Add home</a>
-        `
-    )
+    res.sendFile(Path.join(__dirname, '../', 'views', 'home.html'))
 })
 
 
