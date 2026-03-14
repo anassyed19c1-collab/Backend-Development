@@ -7,3 +7,6 @@ const pool = mysql.createPool({
     password: 'root1',
    database: 'airbnb' 
 });
+
+
+export default pool;
